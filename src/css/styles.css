@@ -1,0 +1,241 @@
+/* =========================================================
+   Nalgene – Variante C (Frosted Glass)
+   Aufbau: zuerst Mobile, darunter die Anpassungen für Desktop
+   ========================================================= */
+
+/* ---------- Farben und Masse ---------- */
+:root {
+    --default-color: #eef2f7;       /* Seitenhintergrund unten */
+    --default-text-color: #2e4058;  /* Fliesstext */
+    --hintergrund-oben: #c8d4e2;    /* Seitenhintergrund oben */
+    --ueberschrift: #13233a;        /* Titel und Überschriften */
+    --blau: #1f5fd6;                /* Zahlen, gleiches Blau wie die Flasche */
+    --karte: rgba(255, 255, 255, 0.6);
+    --karte-rand: rgba(255, 255, 255, 0.9);
+    --kopf-hoehe: 420px;            /* Höhe des Bergbilds */
+    --karten-hover: hsla(0,0%,0%,1);
+}
+
+/* Darkmode: wird von script.js mit data-theme="dark" auf dem body eingeschaltet */
+[data-theme="dark"] {
+    --default-color: #0f1722;
+    --default-text-color: #c3cedb;
+    --hintergrund-oben: #1b2738;
+    --ueberschrift: #e8eef6;
+    --blau: #6fa2ff;
+    --karte: rgba(15, 25, 40, 0.55);
+    --karte-rand: rgba(255, 255, 255, 0.15);
+    --karten-hover: hsla(218, 100%, 72%, 0.35);
+}
+
+/* ---------- Grundeinstellungen ---------- */
+* {
+    box-sizing: border-box;
+}
+
+body {
+    position: relative;     /* damit die Flasche sich am body ausrichtet */
+    margin: 0;
+    overflow-x: hidden;     /* die unscharfe Spiegelung ragt seitlich leicht raus */
+    font-family: "Roboto", sans-serif;
+    color: var(--default-text-color);
+    /* Nebel von oben nach unten, darunter einfach die Grundfarbe */
+    background: var(--default-color) linear-gradient(var(--hintergrund-oben), var(--default-color)) no-repeat;
+}
+
+/* ---------- Parallax-Hintergrund ---------- */
+/* Bleibt fest im Fenster stehen. script.js schiebt ihn beim Scrollen
+   langsamer nach oben als den Rest der Seite. */
+.hintergrund {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: -1;            /* hinter allem anderen */
+}
+
+.berge {
+    height: var(--kopf-hoehe);
+    background: url("../img/berge.jpg") center / cover;
+}
+
+/* Das Bergbild noch einmal, auf den Kopf gestellt und unscharf */
+.spiegelung {
+    height: var(--kopf-hoehe);
+    background: url("../img/berge.jpg") center / cover;
+    transform: scaleY(-1);  /* vertikal spiegeln */
+    filter: blur(6px);
+    opacity: 0.8;
+    /* läuft nach unten hin in den Nebel aus */
+    mask-image: linear-gradient(to top, black, transparent);
+    -webkit-mask-image: linear-gradient(to top, black, transparent);
+}
+
+/* Im Darkmode die Berge abdunkeln */
+[data-theme="dark"] .hintergrund {
+    filter: brightness(0.5);
+}
+
+/* ---------- Kopfbereich ---------- */
+.kopf {
+    position: relative;     /* damit der Button sich am Kopf ausrichtet */
+    height: var(--kopf-hoehe);
+}
+
+.titel {
+    margin: 0;
+    padding-top: 22px;
+    font-family: "Oi", serif;
+    font-weight: 400;
+    font-size: min(13vw, 200px);   /* wächst mit der Fensterbreite, höchstens 200px */
+    line-height: 1;
+    text-align: center;
+    color: var(--ueberschrift);
+}
+
+#darkmode-button {
+    position: absolute;
+    right: 16px;
+    bottom: 16px;
+    z-index: 3;             /* über der Flasche */
+    padding: 8px 16px;
+    border: 1.5px solid var(--karte-rand);
+    border-radius: 999px;
+    background: var(--karte);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    font-family: inherit;
+    font-size: 14px;
+    color: var(--ueberschrift);
+    cursor: pointer;
+}
+
+/* ---------- Flasche ---------- */
+.flasche {
+    position: absolute;
+    top: 55px;
+    left: 50%;
+    transform: translateX(-50%);   /* genau in die Mitte */
+    height: 650px;
+    z-index: 1;                    /* über dem Kopf */
+    filter: drop-shadow(0 20px 25px rgba(15, 30, 55, 0.3));
+}
+
+/* ---------- Karten ---------- */
+.karten {
+    position: relative;
+    z-index: 2;             /* Karten liegen über der Flasche */
+    display: grid;
+    gap: 16px;
+    margin-top: 310px;      /* Platz für die Flasche unter dem Kopf */
+    padding: 0 20px 48px;
+}
+
+/* Der Glas-Effekt */
+.karte {
+    padding: 22px 24px 24px;
+    border: 1.5px solid var(--karte-rand);
+    border-radius: 20px;
+    background: var(--karte);
+    backdrop-filter: blur(24px);           /* macht den Hintergrund unscharf */
+    -webkit-backdrop-filter: blur(24px);   /* dasselbe für Safari */
+    box-shadow: 0 10px 26px rgba(15, 30, 55, 0.12);
+}
+
+.karte .zahl {
+    margin: 0 0 6px;
+    font-size: 48px;
+    font-weight: 700;
+    line-height: 1.1;
+    color: var(--blau);
+}
+
+.einheit {
+    font-size: 22px;
+    font-weight: 500;
+}
+
+.karte h2 {
+    margin: 0 0 6px;
+    font-size: 24px;
+    color: var(--ueberschrift);
+}
+
+.karte p {
+    margin: 0;
+    font-size: 15px;
+    line-height: 23px;
+}
+
+/* =========================================================
+   Desktop: ab 1100px Breite
+   ========================================================= */
+@media (min-width: 1100px) {
+
+    :root {
+        --kopf-hoehe: 590px;
+    }
+
+    .titel {
+        padding-top: 40px;
+    }
+
+    #darkmode-button {
+        top: 24px;
+        right: 24px;
+        bottom: auto;
+    }
+
+    .spiegelung {
+        filter: blur(8px);
+    }
+
+    .flasche {
+        top: 140px;
+        height: 1600px;
+        transition: transform 0.2s;
+    }
+
+    .karten {
+        max-width: 1512px;
+        margin: 42px auto 0;
+        padding: 0 40px 220px;
+
+        /* zwei Spalten links und rechts, in der Mitte Platz für die Flasche */
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: repeat(3, auto);
+        grid-auto-flow: column;     /* zuerst die linke Spalte füllen, dann die rechte */
+        column-gap: 320px;
+        row-gap: 40px;
+    }
+
+    .karte {
+        min-height: 316px;      /* gleiche Höhe wie im Mockup */
+        padding: 30px 43px 36px;
+        border-radius: 25px;
+        transition: transform 0.2s;
+    }
+
+    .karte:hover {
+        transform: scale(103%);
+        box-shadow: 3px 5px 30px var(--karten-hover);
+    }
+
+    .karte .zahl {
+        font-size: 68px;
+    }
+
+    .einheit {
+        font-size: 30px;
+    }
+
+    .karte h2 {
+        font-size: 34px;
+        margin-bottom: 10px;
+    }
+
+    .karte p {
+        font-size: 19px;
+        line-height: 28px;
+    }
+}

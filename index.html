@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Nalgene</title>
+
+    <!-- Schriften von Google Fonts: "Oi" für den Titel, "Roboto" für den Rest -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Oi&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="src/css/styles.css">
+</head>
+<body>
+
+    <!-- Hintergrund: Bergbild + Spiegelung. Bewegt sich beim Scrollen langsamer (Parallax, siehe script.js) -->
+    <div class="hintergrund" aria-hidden="true">
+        <div class="berge"></div>
+        <div class="spiegelung"></div>
+    </div>
+
+    <!-- Kopfbereich mit Titel und Darkmode-Button -->
+    <header class="kopf">
+        <h1 class="titel">NALGENE</h1>
+        <button id="darkmode-button">Theme wechseln</button>
+    </header>
+
+    <!-- Die Flasche wird mit CSS über Kopf und Karten gelegt -->
+    <img class="flasche" src="src/img/flasche.png" alt="Blaue Nalgene-Trinkflasche mit Messskala">
+
+    <!-- Die sechs Info-Karten -->
+    <main class="karten">
+
+        <article class="karte">
+            <p class="zahl">1949</p>
+            <h2>Gegründet</h2>
+            <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat.</p>
+        </article>
+
+        <article class="karte">
+            <p class="zahl">2000 <span class="einheit">ml</span></p>
+            <h2>Fassungsvermögen</h2>
+            <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat.</p>
+        </article>
+
+        <article class="karte">
+            <p class="zahl">100 <span class="einheit">%</span></p>
+            <h2>BPA-frei</h2>
+            <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat.</p>
+        </article>
+
+        <article class="karte">
+            <p class="zahl">USA</p>
+            <h2>Hergestellt in den USA</h2>
+            <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat.</p>
+        </article>
+
+        <article class="karte">
+            <p class="zahl">∞</p>
+            <h2>Unendlich nachfüllbar</h2>
+            <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat.</p>
+        </article>
+
+        <article class="karte">
+            <p class="zahl">1 <span class="einheit">Flasche</span></p>
+            <h2>Für jede Tour</h2>
+            <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat.</p>
+        </article>
+
+    </main>
+
+    <script src="./src/js/script.js"></script>
+</body>
+</html>
